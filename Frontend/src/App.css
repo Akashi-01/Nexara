@@ -1,0 +1,38 @@
+*{
+    color: #ececec;
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+    /* For Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #3e3e3e transparent;
+}
+body{
+    margin: 0;
+    padding: 0;
+}
+.app{
+    background-color: #212121;
+    display: flex;
+}
+
+/* For Chrome, Safari, Edge, and Opera */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #3e3e3e;
+    border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4e4e4e;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #5e5e5e;
+}
