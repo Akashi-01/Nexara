@@ -118,12 +118,7 @@ All routes are prefixed with `/api`.
 
 ## Contributing
 
-Contributions are welcome. Please open an issue to discuss significant changes before submitting a pull request.
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/your-feature`)
-3. Commit your changes
-4. Push to your branch and open a pull request
+This is a personal project and is not currently open to outside contributions. Feel free to fork it for your own use.
 
 ## License
 
@@ -132,4 +127,3 @@ No license has been specified for this project yet.
 ## Author
 
 Built by [Akashi-01](https://github.com/Akashi-01)
-
