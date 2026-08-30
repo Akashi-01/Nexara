@@ -127,8 +127,9 @@ Contributions are welcome. Please open an issue to discuss significant changes b
 
 ## License
 
-No license has been specified for this project yet. Consider adding one (e.g. [MIT](https://choosealicense.com/licenses/mit/)) to clarify how others may use your code.
+No license has been specified for this project yet.
 
 ## Author
 
 Built by [Akashi-01](https://github.com/Akashi-01)
+
