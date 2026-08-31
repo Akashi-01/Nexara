@@ -1,16 +1,16 @@
 *{
-    color: #ececec;
+    color: var(--text-primary);
     font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     /* For Firefox */
     scrollbar-width: thin;
-    scrollbar-color: #3e3e3e transparent;
+    scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 body{
     margin: 0;
     padding: 0;
 }
 .app{
-    background-color: #212121;
+    background-color: var(--bg-primary);
     display: flex;
 }
 
@@ -25,14 +25,14 @@ body{
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #3e3e3e;
+    background: var(--scrollbar-thumb);
     border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #4e4e4e;
+    background: var(--scrollbar-thumb-hover);
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background: #5e5e5e;
+    background: var(--scrollbar-thumb-active);
 }

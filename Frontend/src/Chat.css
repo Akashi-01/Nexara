@@ -13,7 +13,8 @@
     font-size: 0.9rem;
 }
 .userMessage{
-    background-color: #323232;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
     padding: 10px 20px;
     border-radius: 14px;
     margin-left: 15rem;
@@ -22,6 +23,7 @@
 }
 .hljs{
     border-radius: 14px !important;
+    border: 1px solid var(--border-color);
 }
 pre{
     white-space: pre-wrap;
