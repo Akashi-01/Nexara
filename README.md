@@ -5,6 +5,7 @@ An open-source, ChatGPT-like conversational AI assistant built for natural, inte
 ## Features
 
 - **Real-time chat interface** — clean, ChatGPT-style UI built with React
+- **Light & dark themes** — Toggle between light and dark mode for a comfortable experience
 - **Conversation threads** — create, switch between, and delete chat threads from the sidebar
 - **Persistent chat history** — threads and messages are stored in MongoDB and reloaded on demand
 - **Markdown & code rendering** — assistant replies support Markdown formatting with syntax-highlighted code blocks
