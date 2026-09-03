@@ -21,10 +21,128 @@
     max-width: 500px;
     width: fit-content;
 }
-.hljs{
-    border-radius: 14px !important;
-    border: 1px solid var(--border-color);
+/* Code Syntax Contrast Fixes */
+.hljs {
+    color: #e6edf3 !important;
 }
+
+/* Function parameters (e.g. arr, left, right inside function definitions) */
+.hljs-params {
+    color: #e6edf3 !important;
+}
+
+/* Variable names, object properties, and attributes */
+.hljs-variable,
+.hljs-property,
+.hljs-attr {
+    color: #79c0ff !important;
+}
+
+.hljs-params .hljs-variable {
+    color: #79c0ff !important;
+}
+
+.hljs-punctuation {
+    color: #c9d1d9 !important;
+}
+
+.hljs-attr {
+    color: #79c0ff !important;
+}
+
+.hljs-built_in,
+.hljs-keyword,
+.hljs-selector-tag {
+    color: #ff7b72 !important;
+}
+
 pre{
     white-space: pre-wrap;
+}
+/* Copy Button Styles */
+.copyBtn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary, #9ca3af);
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.copyBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary, #ffffff);
+}
+
+.copyBtn.copied {
+    color: #10b981; /* Green checkmark */
+}
+
+/* Code Block Wrapper & Header */
+.codeBlockWrapper {
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: #0d1117;
+}
+
+.codeBlockHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #161b22;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    font-family: monospace;
+}
+
+.codeBlockLang {
+    color: #8b949e !important;
+}
+
+.codeBlockHeader .copyBtn {
+    color: #8b949e !important;
+}
+
+.codeBlockHeader .copyBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff !important;
+}
+
+.codeBlockHeader .copyBtn.copied {
+    color: #10b981 !important;
+}
+
+.codeBlockPre {
+    margin: 0 !important;
+    padding: 12px 16px !important;
+    overflow-x: auto;
+    background-color: transparent !important;
+    color: #e6edf3 !important;
+}
+
+.codeBlockPre code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #e6edf3 !important;
+}
+
+/* Assistant Message Action Bar */
+.assistantMessageContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.messageActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
 }
