@@ -1,13 +1,13 @@
-*{
-    color: var(--text-primary);
-    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
+* {
     /* For Firefox */
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb) transparent;
 }
-body{
+body {
     margin: 0;
     padding: 0;
+    color: var(--text-primary);
+    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .app{
     background-color: var(--bg-primary);
