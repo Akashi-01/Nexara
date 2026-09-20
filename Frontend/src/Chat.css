@@ -17,10 +17,117 @@
     color: var(--text-primary);
     padding: 10px 20px;
     border-radius: 14px;
-    margin-left: 15rem;
     max-width: 500px;
     width: fit-content;
 }
+
+/* User message wrapper with action buttons */
+.userMessageContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.userMessageActions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    padding-top: 6px;
+}
+
+.userDiv:hover .userMessageActions {
+    opacity: 1;
+}
+
+.msgActionBtn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary, #9ca3af);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.msgActionBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary, #ffffff);
+}
+
+/* Inline Edit Mode */
+.userEditContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+}
+
+.userEditInput {
+    background-color: var(--bg-tertiary, #2a2b32);
+    color: var(--text-primary, #ffffff);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 60px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.userEditInput:focus {
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+.userEditActions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.editSubmitBtn,
+.editCancelBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.editSubmitBtn {
+    background: #10b981;
+    color: #fff;
+}
+
+.editSubmitBtn:hover {
+    background: #059669;
+    transform: scale(1.03);
+}
+
+.editCancelBtn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary, #9ca3af);
+}
+
+.editCancelBtn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: var(--text-primary, #ffffff);
+}
+
 /* Code Syntax Contrast Fixes */
 .hljs {
     color: #e6edf3 !important;
@@ -61,26 +168,38 @@ pre{
 }
 /* Copy Button Styles */
 .copyBtn {
-    background: transparent;
-    border: none;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--text-secondary, #9ca3af);
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 500;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 4px 8px;
+    padding: 5px 10px;
     border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .copyBtn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
     color: var(--text-primary, #ffffff);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.copyBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .copyBtn.copied {
-    color: #10b981; /* Green checkmark */
+    background-color: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #10b981; 
 }
 
 /* Code Block Wrapper & Header */
@@ -107,16 +226,28 @@ pre{
 }
 
 .codeBlockHeader .copyBtn {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
     color: #8b949e !important;
+    padding: 4px 8px;
 }
 
 .codeBlockHeader .copyBtn:hover {
     background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
     color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.codeBlockHeader .copyBtn:active {
+    transform: translateY(0);
 }
 
 .codeBlockHeader .copyBtn.copied {
     color: #10b981 !important;
+    background-color: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
 }
 
 .codeBlockPre {
