@@ -1,26 +1,28 @@
 import "./ChatWindow.css";
 import Chat from "./Chat.jsx";
 import { MyContext } from "./MyContext.jsx";
-import { useContext, useState} from "react";
+import { useContext, useState, useCallback, useEffect } from "react";
 import {ScaleLoader} from "react-spinners";
 
 function ChatWindow() {
-    const { prompt, setPrompt, reply, setReply, currThreadId, prevChats, setPrevChats, newChat, setNewChat } = useContext(MyContext);
+    const { prompt, setPrompt, reply, setReply, currThreadId, prevChats, setPrevChats, newChat, setNewChat, sendMessageRef } = useContext(MyContext);
     const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false); // set default false value
 
-    const getReply = async () => {
-        const userMessage = prompt.trim();
+    // Core send logic — takes the message text and an optional base chat history
+    const sendMessage = useCallback(async (messageText, baseChatHistory) => {
+        const userMessage = messageText.trim();
         if (!userMessage) return;
 
-        // Clear input immediately for better UX
         setPrompt("");
-        // Hide "Start a New Chat!" instantly
         setNewChat(false);
 
+        // Use provided base history (for edits) or current prevChats
+        const baseChats = baseChatHistory !== undefined ? baseChatHistory : prevChats;
+
         // Instantly display user's message in the chat
-        setPrevChats(prevChats => [
-            ...prevChats,
+        setPrevChats([
+            ...baseChats,
             { role: "user", content: userMessage }
         ]);
 
@@ -42,15 +44,26 @@ function ChatWindow() {
             setReply(res.reply);
             
             // Display assistant's reply in the chat
-            setPrevChats(prevChats => [
-                ...prevChats,
+            setPrevChats(prev => [
+                ...prev,
                 { role: "assistant", content: res.reply }
             ]);
         } catch (err) {
             console.log(err);
         }
         setLoading(false);
-    }
+    }, [prevChats, currThreadId, setPrompt, setNewChat, setPrevChats, setReply]);
+
+    // Register sendMessage so Chat.jsx can access it via ref
+    useEffect(() => {
+        if (sendMessageRef) {
+            sendMessageRef.current = sendMessage;
+        }
+    }, [sendMessage, sendMessageRef]);
+
+    const getReply = () => {
+        sendMessage(prompt);
+    };
 
     const handleProfileClick = () => {
         setIsOpen(!isOpen);
@@ -87,4 +100,4 @@ function ChatWindow() {
         </div>
     )
 }
-export default ChatWindow;
+export default ChatWindow;

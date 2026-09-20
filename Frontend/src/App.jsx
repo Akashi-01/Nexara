@@ -2,7 +2,7 @@ import './App.css';
 import Sidebar from './Sidebar.jsx';
 import ChatWindow from './ChatWindow.jsx';
 import {MyContext} from './MyContext.jsx';
-import { useState , useEffect} from 'react';
+import { useState , useEffect, useRef } from 'react';
 import {v1 as uuidv1} from 'uuid';
 
 function App() {
@@ -13,6 +13,7 @@ function App() {
   const [newChat,setNewChat] = useState(true);
   const [allThreads, setAllThreads] = useState([]);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const sendMessageRef = useRef(null);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -23,6 +24,10 @@ function App() {
     setTheme(prev => (prev === 'dark' ? 'light' : 'dark'));
   };
 
+  const setSendMessage = (fn) => {
+    sendMessageRef.current = fn;
+  };
+
   const providerValues = { 
     prompt, setPrompt,
     reply, setReply,
@@ -30,7 +35,8 @@ function App() {
     newChat, setNewChat,
     prevChats, setPrevChats,
     allThreads, setAllThreads,
-    theme, toggleTheme
+    theme, toggleTheme,
+    sendMessageRef, setSendMessage
   };
   
   return (
@@ -44,3 +50,4 @@ function App() {
 }
 
 export default App
+
