@@ -4,7 +4,7 @@ import { MyContext } from "./MyContext.jsx";
 import {v1 as uuidv1} from "uuid"; 
 
 function Sidebar(){
-    const { theme, toggleTheme, allThreads, setAllThreads , currThreadId, setNewChat, setPrompt , setReply, setCurrThreadId, setPrevChats} = useContext(MyContext);
+    const { allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setPrevChats, setCurrThreadId, loading, toggleTheme, theme } = useContext(MyContext);
 
     const getAllThreads = async() =>{
         try{
@@ -20,8 +20,8 @@ function Sidebar(){
     };
 
     useEffect(() => {
-        getAllThreads();
-    },[currThreadId]);
+    if (!loading) getAllThreads(); // refresh the list when a reply finishes (or the thread changes)
+}, [currThreadId, loading]);
 
     const createNewChat = () => {
         setNewChat(true);

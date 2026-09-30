@@ -11,6 +11,7 @@ function App() {
   const [currThreadId, setCurrThreadId] = useState(uuidv1());
   const [prevChats,setPrevChats] = useState([]); // stores all prev chats of curr threads
   const [newChat,setNewChat] = useState(true);
+  const [loading, setLoading] = useState(false); 
   const [allThreads, setAllThreads] = useState([]);
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
   const sendMessageRef = useRef(null);
@@ -36,7 +37,8 @@ function App() {
     prevChats, setPrevChats,
     allThreads, setAllThreads,
     theme, toggleTheme,
-    sendMessageRef, setSendMessage
+    sendMessageRef, setSendMessage,
+    loading, setLoading
   };
   
   return (
