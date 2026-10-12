@@ -20,8 +20,8 @@ function Sidebar(){
     };
 
     useEffect(() => {
-    if (!loading) getAllThreads(); // refresh the list when a reply finishes (or the thread changes)
-}, [currThreadId, loading]);
+        if (!loading) getAllThreads(); // refresh the list when a reply finishes (or the thread changes)
+    }, [currThreadId, loading]);
 
     const createNewChat = () => {
         setNewChat(true);
