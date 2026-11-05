@@ -1,6 +1,13 @@
 import express from "express";
 import Thread from "../models/Thread.js";
-import getOpenAIRespense from "../utils/openai.js";
+import { streamOpenAIResponse } from "../utils/openai.js";
+
+// Convert stored messages ({role, parts:[{text}]}) to Groq format
+const toGroqMessages = (msgs) =>
+    msgs.map((m) => ({
+        role: m.role === "model" ? "assistant" : m.role,
+        content: (m.parts || []).map((p) => p.text).join(""),
+    }));
 
 const router = express.Router();
 
@@ -62,34 +69,72 @@ router.delete("/thread/:threadId", async(req, res) => {
 });
 
 // Post route for messages
-router.post("/chat", async(req, res)=>{
-    const {threadId, message} = req.body;
-    if(!threadId || !message){
-        return res.status(400).json({error:"Missing required fields."});
-    } 
-    try{
-        let thread = await Thread.findOne({threadId});
-        
-        if(!thread){
-            // create a new thread
-            thread = new Thread({
-                threadId,
-                title: message,
-                messages: [{role:"user", parts:[{text:message}]}]
-            });
-        }else{
-            thread.messages.push({role:"user", parts:[{text:message}]});
+// Post route for messages (streams the reply via Server-Sent Events)
+router.post("/chat", async (req, res) => {
+    const { threadId, message, truncateTo } = req.body;
+    if (!threadId || !message) {
+        return res.status(400).json({ error: "Missing required fields." });
+    }
+
+    // Phase 1: DB work. Failures here can still return a normal JSON error.
+    let thread;
+    try {
+        thread = await Thread.findOne({ threadId });
+        if (!thread) {
+            thread = new Thread({ threadId, title: message, messages: [] });
+        } else if (Number.isInteger(truncateTo) && truncateTo >= 0) {
+            // message edit: drop the old turns from `truncateTo` onwards
+            thread.messages = thread.messages.slice(0, truncateTo);
         }
-        const assistantReply = await getOpenAIRespense(message);
-        thread.messages.push({role:"assistant", parts:[{text:assistantReply}]});
+        thread.messages.push({ role: "user", parts: [{ text: message }] });
         thread.updatedAt = new Date();
-        await thread.save();
-        res.json({reply: assistantReply});
-    }catch(err){
+        await thread.save(); // user turn is saved even if the AI call fails
+    } catch (err) {
         console.log(err);
-        res.status(500).json({error:"Something went wrong."});
+        return res.status(500).json({ error: "Something went wrong." });
+    }
+
+    // Phase 2: switch the response into an event stream
+    res.writeHead(200, {
+        "Content-Type": "text/event-stream",
+        "Cache-Control": "no-cache, no-transform",
+        Connection: "keep-alive",
+        "X-Accel-Buffering": "no", // stops proxies (nginx/Render) from buffering tokens
+    });
+    const send = (obj) => res.write(`data: ${JSON.stringify(obj)}\n\n`);
+
+    // If the browser disconnects (Stop button / tab closed), cancel the Groq call too
+    const controller = new AbortController();
+    res.on("close", () => {
+        if (!res.writableEnded) controller.abort();
+    });
+
+    let full = "";
+    try {
+        const history = toGroqMessages(thread.messages.slice(-20)); // cap context size
+        for await (const token of streamOpenAIResponse(history, controller.signal)) {
+            full += token;
+            send({ token });
+        }
+        send({ done: true });
+    } catch (err) {
+        if (err.name !== "AbortError") {
+            console.log("Stream error:", err.message);
+            send({ error: "The AI service failed. Please try again." });
+        }
+    } finally {
+        // Phase 3: save what was generated (this also keeps partial replies after Stop)
+        if (full) {
+            try {
+                thread.messages.push({ role: "assistant", parts: [{ text: full }] });
+                thread.updatedAt = new Date();
+                await thread.save();
+            } catch (e) {
+                console.log("Failed to save assistant message:", e);
+            }
+        }
+        res.end();
     }
 });
-
 
 export default router;

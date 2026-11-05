@@ -4,7 +4,7 @@ import { MyContext } from "./MyContext.jsx";
 import {v1 as uuidv1} from "uuid"; 
 
 function Sidebar(){
-    const { allThreads, setAllThreads , currThreadId, setNewChat, setPrompt , setReply, setCurrThreadId, setPrevChats} = useContext(MyContext);
+    const { allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setPrevChats, setCurrThreadId, loading, toggleTheme, theme } = useContext(MyContext);
 
     const getAllThreads = async() =>{
         try{
@@ -20,8 +20,8 @@ function Sidebar(){
     };
 
     useEffect(() => {
-        getAllThreads();
-    },[currThreadId]);
+        if (!loading) getAllThreads(); // refresh the list when a reply finishes (or the thread changes)
+    }, [currThreadId, loading]);
 
     const createNewChat = () => {
         setNewChat(true);
@@ -67,6 +67,12 @@ function Sidebar(){
             <button onClick={createNewChat}>
                 <img src="src/assets/blacklogo.png" alt="GPT Logo" className="logo"/>
                 <span><i className="fa-solid fa-pen-to-square"></i></span>
+            </button>
+
+            {/* Theme toggle button */}
+            <button onClick={toggleTheme}>
+                <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+                <span><i className={theme === "dark" ? "fa-solid fa-sun" : "fa-solid fa-moon"}></i></span>
             </button>
             
             {/* History */}

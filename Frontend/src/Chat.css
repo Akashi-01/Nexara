@@ -13,16 +13,267 @@
     font-size: 0.9rem;
 }
 .userMessage{
-    background-color: #323232;
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
     padding: 10px 20px;
     border-radius: 14px;
-    margin-left: 15rem;
     max-width: 500px;
     width: fit-content;
 }
-.hljs{
-    border-radius: 14px !important;
+
+/* User message wrapper with action buttons */
+.userMessageContainer {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    justify-content: flex-end;
 }
+
+.userMessageActions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    padding-top: 6px;
+}
+
+.userDiv:hover .userMessageActions {
+    opacity: 1;
+}
+
+.msgActionBtn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary, #9ca3af);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.msgActionBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary, #ffffff);
+}
+
+/* Inline Edit Mode */
+.userEditContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    max-width: 500px;
+    margin-left: auto;
+}
+
+.userEditInput {
+    background-color: var(--bg-tertiary, #2a2b32);
+    color: var(--text-primary, #ffffff);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 60px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.userEditInput:focus {
+    border-color: rgba(255, 255, 255, 0.45);
+}
+
+.userEditActions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+.editSubmitBtn,
+.editCancelBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    border: none;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.editSubmitBtn {
+    background: #10b981;
+    color: #fff;
+}
+
+.editSubmitBtn:hover {
+    background: #059669;
+    transform: scale(1.03);
+}
+
+.editCancelBtn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary, #9ca3af);
+}
+
+.editCancelBtn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: var(--text-primary, #ffffff);
+}
+
+/* Code Syntax Contrast Fixes */
+.hljs {
+    color: #e6edf3 !important;
+}
+
+/* Function parameters (e.g. arr, left, right inside function definitions) */
+.hljs-params {
+    color: #e6edf3 !important;
+}
+
+/* Variable names, object properties, and attributes */
+.hljs-variable,
+.hljs-property,
+.hljs-attr {
+    color: #79c0ff !important;
+}
+
+.hljs-params .hljs-variable {
+    color: #79c0ff !important;
+}
+
+.hljs-punctuation {
+    color: #c9d1d9 !important;
+}
+
+.hljs-attr {
+    color: #79c0ff !important;
+}
+
+.hljs-built_in,
+.hljs-keyword,
+.hljs-selector-tag {
+    color: #ff7b72 !important;
+}
+
 pre{
     white-space: pre-wrap;
+}
+/* Copy Button Styles */
+.copyBtn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-secondary, #9ca3af);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.copyBtn:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: var(--text-primary, #ffffff);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+.copyBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.copyBtn.copied {
+    background-color: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #10b981; 
+}
+
+/* Code Block Wrapper & Header */
+.codeBlockWrapper {
+    margin: 1rem 0;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background-color: #0d1117;
+}
+
+.codeBlockHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #161b22;
+    padding: 6px 14px;
+    font-size: 0.75rem;
+    font-family: monospace;
+}
+
+.codeBlockLang {
+    color: #8b949e !important;
+}
+
+.codeBlockHeader .copyBtn {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    color: #8b949e !important;
+    padding: 4px 8px;
+}
+
+.codeBlockHeader .copyBtn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff !important;
+    transform: translateY(-1px);
+}
+
+.codeBlockHeader .copyBtn:active {
+    transform: translateY(0);
+}
+
+.codeBlockHeader .copyBtn.copied {
+    color: #10b981 !important;
+    background-color: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.codeBlockPre {
+    margin: 0 !important;
+    padding: 12px 16px !important;
+    overflow-x: auto;
+    background-color: transparent !important;
+    color: #e6edf3 !important;
+}
+
+.codeBlockPre code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 0.85rem;
+    color: #e6edf3 !important;
+}
+
+/* Assistant Message Action Bar */
+.assistantMessageContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.messageActions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
 }
