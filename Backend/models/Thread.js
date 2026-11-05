@@ -23,10 +23,15 @@ const MessageSchema = new mongoose.Schema({
 });
 
 const ThreadSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+        index: true
+    },
     threadId: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     title: {
         type: String,
@@ -42,5 +47,8 @@ const ThreadSchema = new mongoose.Schema({
         default: Date.now
     }
 });
+
+// A threadId only needs to be unique within one user's threads
+ThreadSchema.index({ userId: 1, threadId: 1 }, { unique: true });
 
 export default mongoose.model("Thread", ThreadSchema);

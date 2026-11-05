@@ -71,3 +71,5 @@ coverage/
 .parcel-cache/
 .vercel/
 .netlify/
+cookies.txt
+cookies2.txt
