@@ -1,3 +1,27 @@
+import mongoose from "mongoose";
+
+const MessageSchema = new mongoose.Schema({
+    role: {
+        type: String,
+        enum: ["user", "assistant"],
+        required: true
+    },
+    parts: {
+        type: [
+            {
+                text: {
+                    type: String,
+                    required: true
+                }
+            }
+        ]
+    },
+    timestamp: {
+        type: Date,
+        default: Date.now
+    }
+});
+
 const ThreadSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -7,7 +31,7 @@ const ThreadSchema = new mongoose.Schema({
     },
     threadId: {
         type: String,
-        required: true      // 'unique: true' removed
+        required: true
     },
     title: {
         type: String,
@@ -26,3 +50,5 @@ const ThreadSchema = new mongoose.Schema({
 
 // A threadId only needs to be unique within one user's threads
 ThreadSchema.index({ userId: 1, threadId: 1 }, { unique: true });
+
+export default mongoose.model("Thread", ThreadSchema);
