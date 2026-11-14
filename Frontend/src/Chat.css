@@ -1,41 +1,204 @@
-.chats{
-    max-width: 700px;
+/* ═══════════════════════════════════════════════════════════════
+   Nexara Chat & Messages  –  $100M AI SaaS Aesthetics
+   ═══════════════════════════════════════════════════════════════ */
+
+.chats {
+    flex: 1;
+    width: 100%;
+    max-width: 860px;
+    margin: 0 auto;
     overflow-y: auto;
-    padding: 2rem 8rem;
-}
-.userDiv{
+    overflow-x: hidden;
+    padding: 28px 24px 20px;
     display: flex;
-    justify-content: flex-end;
-    font-size: 0.9rem;
-}
-.gptDiv{
-    text-align: left;
-    font-size: 0.9rem;
-}
-.userMessage{
-    background-color: var(--bg-tertiary);
-    color: var(--text-primary);
-    padding: 10px 20px;
-    border-radius: 14px;
-    max-width: 500px;
-    width: fit-content;
+    flex-direction: column;
 }
 
-/* User message wrapper with action buttons */
+/* ═══════════════════  WELCOME / EMPTY STATE  ═══════════════════ */
+.welcomeScreen {
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    padding: 40px 10px;
+    text-align: center;
+}
+
+.welcomeHero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-width: 620px;
+}
+
+.welcomeLogoBadge {
+    width: 68px;
+    height: 68px;
+    border-radius: 20px;
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 35px rgba(139, 92, 246, 0.2);
+    margin-bottom: 4px;
+}
+
+.welcomeHeading {
+    margin: 0;
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    background: var(--gradient-brand);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.welcomeSubheading {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 520px;
+}
+
+/* ── Suggestions Grid ── */
+.suggestionsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    width: 100%;
+    max-width: 720px;
+}
+
+.suggestionCard {
+    background: var(--bg-glass-card);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border-radius: 18px;
+    padding: 18px 20px;
+    text-align: left;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.suggestionCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.suggestionCard:hover {
+    border-color: var(--border-highlight);
+    background: var(--bg-glass-hover);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(139, 92, 246, 0.12);
+}
+
+.suggestionCard:hover::before {
+    opacity: 1;
+}
+
+.suggestionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.suggestionIcon {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.suggestionArrow {
+    color: var(--text-muted);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.suggestionCard:hover .suggestionArrow {
+    color: var(--primary);
+    transform: translate(2px, -2px);
+}
+
+.suggestionTitle {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+}
+
+.suggestionDesc {
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* ═══════════════════  MESSAGE STREAM  ═══════════════════ */
+.messageStream {
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    width: 100%;
+}
+
+/* ── User Message Bubble ── */
+.userDiv {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
 .userMessageContainer {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     gap: 8px;
-    justify-content: flex-end;
+    max-width: 80%;
+}
+
+.userMessage {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.18) 0%, rgba(59, 130, 246, 0.12) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    color: var(--text-primary);
+    padding: 13px 20px;
+    border-radius: 20px 20px 4px 20px;
+    font-size: 14.5px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+    word-break: break-word;
 }
 
 .userMessageActions {
     display: flex;
     align-items: center;
-    gap: 2px;
+    gap: 4px;
     opacity: 0;
     transition: opacity 0.2s ease;
-    padding-top: 6px;
+    padding-bottom: 4px;
 }
 
 .userDiv:hover .userMessageActions {
@@ -43,49 +206,58 @@
 }
 
 .msgActionBtn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary, #9ca3af);
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 5px;
-    border-radius: 6px;
-    transition: background 0.2s, color 0.2s;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    transition: all 0.18s ease;
 }
 
 .msgActionBtn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--text-primary, #ffffff);
+    background: var(--hover-bg);
+    color: var(--text-primary);
+    border-color: var(--border-highlight);
+    transform: scale(1.08);
 }
 
-/* Inline Edit Mode */
+/* ── Inline User Edit Container ── */
 .userEditContainer {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 10px;
     width: 100%;
-    max-width: 500px;
+    max-width: 650px;
     margin-left: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-highlight);
+    padding: 14px;
+    border-radius: 18px;
+    box-shadow: var(--shadow-md);
 }
 
 .userEditInput {
-    background-color: var(--bg-tertiary, #2a2b32);
-    color: var(--text-primary, #ffffff);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--input-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 10px 16px;
-    font-size: 0.9rem;
+    padding: 12px 16px;
+    font-size: 14px;
     font-family: inherit;
+    line-height: 1.5;
     resize: vertical;
-    min-height: 60px;
+    min-height: 70px;
     outline: none;
     transition: border-color 0.2s ease;
 }
 
 .userEditInput:focus {
-    border-color: rgba(255, 255, 255, 0.45);
+    border-color: var(--primary);
 }
 
 .userEditActions {
@@ -98,55 +270,291 @@
 .editCancelBtn {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    padding: 6px 14px;
-    border-radius: 8px;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 10px;
     border: none;
-    font-size: 0.8rem;
-    font-weight: 500;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
+    transition: all 0.2s ease;
 }
 
 .editSubmitBtn {
-    background: #10b981;
-    color: #fff;
+    background: var(--gradient-brand);
+    color: #ffffff;
+    box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
 }
 
 .editSubmitBtn:hover {
-    background: #059669;
-    transform: scale(1.03);
+    box-shadow: 0 4px 16px rgba(139, 92, 246, 0.45);
+    transform: translateY(-1px);
 }
 
 .editCancelBtn {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--text-secondary, #9ca3af);
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
 }
 
 .editCancelBtn:hover {
-    background: rgba(255, 255, 255, 0.18);
-    color: var(--text-primary, #ffffff);
+    background: var(--hover-bg);
+    color: var(--text-primary);
 }
 
-/* Code Syntax Contrast Fixes */
-.hljs {
+/* ── Assistant Message Container ── */
+.gptDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.assistantMessageContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.assistantHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.assistantAvatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    background: var(--gradient-brand);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.assistantName {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+}
+
+.assistantMessageBody {
+    font-size: 14.5px;
+    line-height: 1.75;
+    color: var(--text-primary);
+    padding-left: 34px;
+    letter-spacing: 0.005em;
+}
+
+/* ── Assistant Markdown Typography ── */
+.assistantMessageBody h1,
+.assistantMessageBody h2,
+.assistantMessageBody h3,
+.assistantMessageBody h4 {
+    margin: 18px 0 10px;
+    color: var(--text-primary);
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.assistantMessageBody h1 { font-size: 22px; }
+.assistantMessageBody h2 { font-size: 18px; }
+.assistantMessageBody h3 { font-size: 16px; }
+
+.assistantMessageBody p {
+    margin: 10px 0;
+}
+
+.assistantMessageBody ul,
+.assistantMessageBody ol {
+    margin: 10px 0 10px 20px;
+    padding: 0;
+}
+
+.assistantMessageBody li {
+    margin: 6px 0;
+}
+
+.assistantMessageBody blockquote {
+    margin: 14px 0;
+    padding: 10px 18px;
+    border-left: 3px solid var(--primary);
+    background: var(--card-bg);
+    border-radius: 0 10px 10px 0;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.assistantMessageBody strong {
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.assistantMessageBody a {
+    color: var(--primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.assistantMessageBody table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+.assistantMessageBody th,
+.assistantMessageBody td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 13.5px;
+}
+
+.assistantMessageBody th {
+    background: var(--bg-tertiary);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Inline code pill */
+.assistantMessageBody :not(pre) > code {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--primary);
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 13px;
+}
+
+/* ── Code Blocks ── */
+.codeBlockWrapper {
+    margin: 16px 0;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #0d1117;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.codeBlockHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #161b22;
+    padding: 8px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    font-size: 12px;
+}
+
+.codeBlockLang {
+    color: #8b949e;
+    font-weight: 600;
+    text-transform: lowercase;
+    letter-spacing: 0.05em;
+    font-family: 'Fira Code', monospace;
+}
+
+.codeBlockHeader .copyBtn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #c9d1d9;
+    padding: 4px 10px;
+    font-size: 11.5px;
+}
+
+.codeBlockHeader .copyBtn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-1px);
+}
+
+.codeBlockHeader .copyBtn.copied {
+    background: rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.4);
+    color: #10b981;
+}
+
+.codeBlockPre {
+    margin: 0 !important;
+    padding: 14px 18px !important;
+    overflow-x: auto;
+    background: #0d1117 !important;
     color: #e6edf3 !important;
 }
 
-/* Function parameters (e.g. arr, left, right inside function definitions) */
+.codeBlockPre code {
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #e6edf3 !important;
+    background: transparent !important;
+    display: block;
+}
+
+/* Syntax Highlighting Contrast Fixes (Works in both Dark & Light themes) */
+.hljs {
+    color: #e6edf3 !important;
+    background: transparent !important;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+    color: #ff7b72 !important;
+    font-weight: 600;
+}
+
+.hljs-string,
+.hljs-doctag {
+    color: #a5d6ff !important;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+    color: #d2a8ff !important;
+    font-weight: 600;
+}
+
+.hljs-comment,
+.hljs-quote {
+    color: #8b949e !important;
+    font-style: italic;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+    color: #79c0ff !important;
+}
+
 .hljs-params {
     color: #e6edf3 !important;
 }
 
-/* Variable names, object properties, and attributes */
-.hljs-variable,
-.hljs-property,
-.hljs-attr {
-    color: #79c0ff !important;
+.hljs-type,
+.hljs-class .hljs-title {
+    color: #ffa657 !important;
 }
 
-.hljs-params .hljs-variable {
-    color: #79c0ff !important;
+.hljs-built_in,
+.hljs-builtin-name {
+    color: #7ee787 !important;
+}
+
+.hljs-function {
+    color: #d2a8ff !important;
 }
 
 .hljs-punctuation {
@@ -157,123 +565,62 @@
     color: #79c0ff !important;
 }
 
-.hljs-built_in,
-.hljs-keyword,
-.hljs-selector-tag {
-    color: #ff7b72 !important;
-}
-
-pre{
-    white-space: pre-wrap;
-}
-/* Copy Button Styles */
+/* Copy Button Styling */
 .copyBtn {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text-secondary, #9ca3af);
-    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 5px 10px;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-family: inherit;
     transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .copyBtn:hover {
-    background-color: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: var(--text-primary, #ffffff);
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.2);
     transform: translateY(-1px);
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
-}
-
-.copyBtn:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .copyBtn.copied {
-    background-color: rgba(16, 185, 129, 0.15);
-    border-color: rgba(16, 185, 129, 0.4);
-    color: #10b981; 
-}
-
-/* Code Block Wrapper & Header */
-.codeBlockWrapper {
-    margin: 1rem 0;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    background-color: #0d1117;
-}
-
-.codeBlockHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #161b22;
-    padding: 6px 14px;
-    font-size: 0.75rem;
-    font-family: monospace;
-}
-
-.codeBlockLang {
-    color: #8b949e !important;
-}
-
-.codeBlockHeader .copyBtn {
-    background: transparent;
-    border-color: transparent;
-    box-shadow: none;
-    color: #8b949e !important;
-    padding: 4px 8px;
-}
-
-.codeBlockHeader .copyBtn:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.15);
-    color: #ffffff !important;
-    transform: translateY(-1px);
-}
-
-.codeBlockHeader .copyBtn:active {
-    transform: translateY(0);
-}
-
-.codeBlockHeader .copyBtn.copied {
-    color: #10b981 !important;
-    background-color: rgba(16, 185, 129, 0.1);
-    border-color: rgba(16, 185, 129, 0.3);
-}
-
-.codeBlockPre {
-    margin: 0 !important;
-    padding: 12px 16px !important;
-    overflow-x: auto;
-    background-color: transparent !important;
-    color: #e6edf3 !important;
-}
-
-.codeBlockPre code {
-    font-family: 'Fira Code', 'Courier New', monospace;
-    font-size: 0.85rem;
-    color: #e6edf3 !important;
-}
-
-/* Assistant Message Action Bar */
-.assistantMessageContainer {
-    position: relative;
-    display: flex;
-    flex-direction: column;
+    background: rgba(16, 185, 129, 0.15);
+    border-color: rgba(16, 185, 129, 0.35);
+    color: #10b981;
 }
 
 .messageActions {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-top: 4px;
+    padding-left: 34px;
+    margin-top: 2px;
+}
+
+/* ═══════════════════  RESPONSIVE  ═══════════════════ */
+@media (max-width: 768px) {
+    .chats {
+        padding: 16px 14px;
+    }
+    .suggestionsGrid {
+        grid-template-columns: 1fr;
+    }
+    .welcomeHeading {
+        font-size: 26px;
+    }
+    .userMessageContainer {
+        max-width: 92%;
+    }
+    .assistantMessageBody {
+        padding-left: 0;
+    }
+    .messageActions {
+        padding-left: 0;
+    }
 }

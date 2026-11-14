@@ -1,14 +1,53 @@
 import "./Chat.css";
-import { useContext, useState } from 'react';
+import { useContext, useState } from "react";
 import { MyContext } from "./MyContext.jsx";
-import rehypeHighlight from 'rehype-highlight';
-import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from "rehype-highlight";
+import ReactMarkdown from "react-markdown";
 import "highlight.js/styles/github-dark.css";
 import CopyButton from "./components/CopyButton.jsx";
 import CodeBlock from "./components/CodeBlock.jsx";
+import { motion } from "framer-motion";
+import {
+    Sparkles,
+    Code2,
+    BookOpen,
+    HelpCircle,
+    ArrowUpRight,
+    Edit3,
+    Check,
+    X,
+    Bot
+} from "lucide-react";
+
+const SUGGESTIONS = [
+    {
+        icon: <BookOpen size={18} />,
+        title: "Explain a concept",
+        prompt: "Explain quantum computing and its future applications in simple terms",
+        desc: "Clear explanations & mental models"
+    },
+    {
+        icon: <Code2 size={18} />,
+        title: "Generate code",
+        prompt: "Write a production-ready debounce hook in React with TypeScript",
+        desc: "Clean architecture & algorithms"
+    },
+    {
+        icon: <Sparkles size={18} />,
+        title: "Summarize content",
+        prompt: "How to summarize complex technical documents efficiently?",
+        desc: "Key takeaways & structured summaries"
+    },
+    {
+        icon: <HelpCircle size={18} />,
+        title: "Answer questions",
+        prompt: "What are the latest breakthroughs in large language models?",
+        desc: "Deep knowledge & fast reasoning"
+    }
+];
 
 function Chat() {
-    const { newChat, prevChats, sendMessageRef, loading } = useContext(MyContext);
+    const { newChat, prevChats, sendMessageRef, loading, setPrompt } = useContext(MyContext);
     const [editingIdx, setEditingIdx] = useState(null);
     const [editText, setEditText] = useState("");
 
@@ -38,91 +77,168 @@ function Chat() {
         }
     };
 
+    const handleSuggestionClick = (promptText) => {
+        if (loading) return;
+        if (sendMessageRef?.current) {
+            sendMessageRef.current(promptText);
+        } else if (setPrompt) {
+            setPrompt(promptText);
+        }
+    };
+
     return (
-        <>
-            {newChat && <h1>Start a New Chat!</h1>}
-            <div className="chats">
-                {prevChats?.map((chat, idx) => {
-                    const text = chat.content || chat.parts?.[0]?.text || "";
-                    const isUser = chat.role === "user";
+        <div className="chats">
+            {newChat ? (
+                <div className="welcomeScreen">
+                    <motion.div
+                        className="welcomeHero"
+                        initial={{ opacity: 0, y: 18 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                    >
+                        <div className="welcomeLogoBadge">
+                            <svg width="36" height="36" viewBox="0 0 42 42" fill="none">
+                                <path
+                                    d="M21 4L37 13v16L21 38 5 29V13L21 4z"
+                                    stroke="url(#welcomeLogoGrad)"
+                                    strokeWidth="2.5"
+                                    fill="none"
+                                />
+                                <path
+                                    d="M21 12L29 17v10l-8 5-8-5V17l8-5z"
+                                    fill="url(#welcomeLogoGrad)"
+                                    opacity="0.3"
+                                />
+                                <circle cx="21" cy="21" r="4" fill="url(#welcomeLogoGrad)" />
+                                <defs>
+                                    <linearGradient id="welcomeLogoGrad" x1="0" y1="0" x2="42" y2="42">
+                                        <stop offset="0%" stopColor="#8B5CF6" />
+                                        <stop offset="50%" stopColor="#3B82F6" />
+                                        <stop offset="100%" stopColor="#06B6D4" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+                        <h1 className="welcomeHeading">How can Nexara help today?</h1>
+                        <p className="welcomeSubheading">
+                            Supercharged intelligence designed for fast reasoning, deep coding, and creative problem solving.
+                        </p>
+                    </motion.div>
 
-                    // Assistant bubble that hasn't received its first token yet: show nothing
-                    // (the spinner in ChatWindow covers this moment)
-                    if (!isUser && !text) return null;
+                    <motion.div
+                        className="suggestionsGrid"
+                        initial={{ opacity: 0, y: 22 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
+                    >
+                        {SUGGESTIONS.map((s, i) => (
+                            <motion.div
+                                key={s.title}
+                                className="suggestionCard"
+                                onClick={() => handleSuggestionClick(s.prompt)}
+                                whileHover={{ y: -3, scale: 1.01 }}
+                                whileTap={{ scale: 0.98 }}
+                                transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                            >
+                                <div className="suggestionHeader">
+                                    <div className="suggestionIcon">{s.icon}</div>
+                                    <ArrowUpRight size={16} className="suggestionArrow" />
+                                </div>
+                                <div className="suggestionTitle">{s.title}</div>
+                                <div className="suggestionDesc">{s.desc}</div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
+                </div>
+            ) : (
+                <div className="messageStream">
+                    {prevChats?.map((chat, idx) => {
+                        const text = chat.content || chat.parts?.[0]?.text || "";
+                        const isUser = chat.role === "user";
 
-                    return (
-                        <div className={isUser ? "userDiv" : "gptDiv"} key={idx}>
-                            {isUser ? (
-                                editingIdx === idx ? (
-                                    <div className="userEditContainer">
-                                        <textarea
-                                            className="userEditInput"
-                                            value={editText}
-                                            onChange={(e) => setEditText(e.target.value)}
-                                            onKeyDown={(e) => {
-                                                if (e.key === "Enter" && !e.shiftKey) {
-                                                    e.preventDefault();
-                                                    handleEditSubmit(idx);
-                                                }
-                                                if (e.key === "Escape") handleEditCancel();
-                                            }}
-                                            autoFocus
-                                            rows={3}
-                                        />
-                                        <div className="userEditActions">
-                                            <button className="editSubmitBtn" onClick={() => handleEditSubmit(idx)}>
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                    <polyline points="20 6 9 17 4 12" />
-                                                </svg>
-                                                Send
-                                            </button>
-                                            <button className="editCancelBtn" onClick={handleEditCancel}>
-                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                                                    <line x1="18" y1="6" x2="6" y2="18" />
-                                                    <line x1="6" y1="6" x2="18" y2="18" />
-                                                </svg>
-                                                Cancel
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="userMessageContainer">
-                                        <div className="userMessageActions">
-                                            {!loading && (
+                        // Assistant bubble that hasn't received its first token yet: show nothing
+                        if (!isUser && !text) return null;
+
+                        return (
+                            <div className={isUser ? "userDiv" : "gptDiv"} key={idx}>
+                                {isUser ? (
+                                    editingIdx === idx ? (
+                                        <div className="userEditContainer">
+                                            <textarea
+                                                className="userEditInput"
+                                                value={editText}
+                                                onChange={(e) => setEditText(e.target.value)}
+                                                onKeyDown={(e) => {
+                                                    if (e.key === "Enter" && !e.shiftKey) {
+                                                        e.preventDefault();
+                                                        handleEditSubmit(idx);
+                                                    }
+                                                    if (e.key === "Escape") handleEditCancel();
+                                                }}
+                                                autoFocus
+                                                rows={3}
+                                            />
+                                            <div className="userEditActions">
                                                 <button
-                                                    className="msgActionBtn"
-                                                    title="Edit"
-                                                    onClick={() => handleEditStart(idx, text)}
+                                                    className="editSubmitBtn"
+                                                    onClick={() => handleEditSubmit(idx)}
                                                 >
-                                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-                                                    </svg>
+                                                    <Check size={14} />
+                                                    <span>Save & Submit</span>
                                                 </button>
-                                            )}
+                                                <button
+                                                    className="editCancelBtn"
+                                                    onClick={handleEditCancel}
+                                                >
+                                                    <X size={14} />
+                                                    <span>Cancel</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="userMessageContainer">
+                                            <div className="userMessageActions">
+                                                {!loading && (
+                                                    <button
+                                                        className="msgActionBtn"
+                                                        title="Edit message"
+                                                        onClick={() => handleEditStart(idx, text)}
+                                                    >
+                                                        <Edit3 size={13} />
+                                                    </button>
+                                                )}
+                                                <CopyButton text={text} showLabel={false} />
+                                            </div>
+                                            <div className="userMessage">{text}</div>
+                                        </div>
+                                    )
+                                ) : (
+                                    <div className="assistantMessageContainer">
+                                        <div className="assistantHeader">
+                                            <div className="assistantAvatar">
+                                                <Bot size={15} />
+                                            </div>
+                                            <span className="assistantName">Nexara</span>
+                                        </div>
+                                        <div className="assistantMessageBody">
+                                            <ReactMarkdown
+                                                rehypePlugins={[rehypeHighlight]}
+                                                components={markdownComponents}
+                                            >
+                                                {text}
+                                            </ReactMarkdown>
+                                        </div>
+                                        <div className="messageActions">
                                             <CopyButton text={text} showLabel={false} />
                                         </div>
-                                        <p className="userMessage">{text}</p>
                                     </div>
-                                )
-                            ) : (
-                                <div className="assistantMessageContainer">
-                                    <ReactMarkdown
-                                        rehypePlugins={[rehypeHighlight]}
-                                        components={markdownComponents}
-                                    >
-                                        {text}
-                                    </ReactMarkdown>
-                                    <div className="messageActions">
-                                        <CopyButton text={text} showLabel={false} />
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    );
-                })}
-            </div>
-        </>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div>
+            )}
+        </div>
     );
 }
 
