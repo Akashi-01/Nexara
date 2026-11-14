@@ -85,11 +85,16 @@ input:focus{
     color: var(--text-secondary);
 }
 
+/* Profile wrapper */
+.profileWrapper{
+    position: relative;
+}
+
 /* Dropdown CSS */
 .dropDown{
     position: absolute;
-    top: 4rem;
-    right: 4rem;
+    top: 100%;
+    right: 0;
     width: 150px;
     background-color: var(--bg-tertiary);
     padding: 0.3rem 0.5rem;

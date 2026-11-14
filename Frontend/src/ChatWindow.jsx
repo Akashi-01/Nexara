@@ -6,9 +6,21 @@ import { ScaleLoader } from "react-spinners";
 import { streamChat } from "./streamChat.js";
 
 function ChatWindow() {
-    const { prompt, setPrompt, currThreadId, prevChats, setPrevChats, setNewChat, sendMessageRef, loading, setLoading } = useContext(MyContext);
+    const { prompt, setPrompt, currThreadId, prevChats, setPrevChats, setNewChat, sendMessageRef, loading, setLoading, user, logout } = useContext(MyContext);
     const [isOpen, setIsOpen] = useState(false);
     const controllerRef = useRef(null);
+    const profileRef = useRef(null);
+
+    // Close dropdown when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (profileRef.current && !profileRef.current.contains(e.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     // Core send logic: takes the message text and an optional base chat history (used by edits)
     const sendMessage = useCallback(async (messageText, baseChatHistory) => {
@@ -119,19 +131,22 @@ function ChatWindow() {
         <div className="chatWindow">
             <div className="navbar">
                 <span>GPT <i className="fa-solid fa-chevron-down"></i></span>
-                <div className="userIconDiv" onClick={handleProfileClick}>
-                    <span className="userIcon"><i className="fa-solid fa-user"></i></span>
+                <div className="profileWrapper" ref={profileRef}>
+                    <div className="userIconDiv" onClick={handleProfileClick}>
+                        <span className="userIcon"><i className="fa-solid fa-user"></i></span>
+                    </div>
+                    {
+                        isOpen &&
+                        <div className="dropDown">
+                            <div className="dropDownItem dropDownEmail"><i className="fa-solid fa-user"></i> {user?.email}</div>
+                            <div className="dropDownItem"><i className="fa-solid fa-gear"></i> Settings</div>
+                            <div className="dropDownItem"><i className="fa-solid fa-cloud-arrow-up"></i> Upgrade Plan</div>
+                            <div className="dropDownItem" onClick={() => { setIsOpen(false); logout(); }}><i className="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
+                            <div className="dropDownItem"><i className="fa-solid fa-circle-question"></i> Help & FAQ</div>
+                        </div>
+                    }
                 </div>
             </div>
-            {
-                isOpen &&
-                <div className="dropDown">
-                    <div className="dropDownItem"><i className="fa-solid fa-gear"></i> Settings</div>
-                    <div className="dropDownItem"><i className="fa-solid fa-cloud-arrow-up"></i> Upgrade Plan</div>
-                    <div className="dropDownItem"><i className="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
-                    <div className="dropDownItem"><i className="fa-solid fa-circle-question"></i> Help & FAQ</div>
-                </div>
-            }
             <Chat />
             <ScaleLoader color="#fff" loading={waitingForFirstToken} />
             <div className="chatInput">
