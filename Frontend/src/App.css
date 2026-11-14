@@ -1,38 +1,84 @@
+/* ═══════════════════════════════════════════════════════════════
+   Nexara Global Application Styles & Reset
+   ═══════════════════════════════════════════════════════════════ */
+
 * {
-    /* For Firefox */
-    scrollbar-width: thin;
-    scrollbar-color: var(--scrollbar-thumb) transparent;
-}
-body {
-    margin: 0;
-    padding: 0;
-    color: var(--text-primary);
-    font-family: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-.app{
-    background-color: var(--bg-primary);
-    display: flex;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
 }
 
-/* For Chrome, Safari, Edge, and Opera */
+body {
+  margin: 0;
+  padding: 0;
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.app {
+  background-color: var(--bg-primary);
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle ambient background glow across main application */
+.app::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(59, 130, 246, 0.04) 50%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+}
+
+.app::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  left: 20%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.06) 0%, rgba(139, 92, 246, 0.03) 50%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px);
+}
+
+/* Webkit Scrollbars */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: transparent;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb);
-    border-radius: 9999px;
+  background: var(--scrollbar-thumb);
+  border-radius: 9999px;
+  transition: background 0.2s ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--scrollbar-thumb-hover);
+  background: var(--scrollbar-thumb-hover);
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background: var(--scrollbar-thumb-active);
+  background: var(--scrollbar-thumb-active);
 }
