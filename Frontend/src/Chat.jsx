@@ -7,47 +7,10 @@ import "highlight.js/styles/github-dark.css";
 import CopyButton from "./components/CopyButton.jsx";
 import CodeBlock from "./components/CodeBlock.jsx";
 import { motion } from "framer-motion";
-import {
-    Sparkles,
-    Code2,
-    BookOpen,
-    HelpCircle,
-    ArrowUpRight,
-    Edit3,
-    Check,
-    X,
-    Bot
-} from "lucide-react";
-
-const SUGGESTIONS = [
-    {
-        icon: <BookOpen size={18} />,
-        title: "Explain a concept",
-        prompt: "Explain quantum computing and its future applications in simple terms",
-        desc: "Clear explanations & mental models"
-    },
-    {
-        icon: <Code2 size={18} />,
-        title: "Generate code",
-        prompt: "Write a production-ready debounce hook in React with TypeScript",
-        desc: "Clean architecture & algorithms"
-    },
-    {
-        icon: <Sparkles size={18} />,
-        title: "Summarize content",
-        prompt: "How to summarize complex technical documents efficiently?",
-        desc: "Key takeaways & structured summaries"
-    },
-    {
-        icon: <HelpCircle size={18} />,
-        title: "Answer questions",
-        prompt: "What are the latest breakthroughs in large language models?",
-        desc: "Deep knowledge & fast reasoning"
-    }
-];
+import { Edit3, Check, X, Bot } from "lucide-react";
 
 function Chat() {
-    const { newChat, prevChats, sendMessageRef, loading, setPrompt } = useContext(MyContext);
+    const { newChat, prevChats, sendMessageRef, loading } = useContext(MyContext);
     const [editingIdx, setEditingIdx] = useState(null);
     const [editText, setEditText] = useState("");
 
@@ -77,79 +40,17 @@ function Chat() {
         }
     };
 
-    const handleSuggestionClick = (promptText) => {
-        if (loading) return;
-        if (sendMessageRef?.current) {
-            sendMessageRef.current(promptText);
-        } else if (setPrompt) {
-            setPrompt(promptText);
-        }
-    };
-
     return (
         <div className="chats">
             {newChat ? (
-                <div className="welcomeScreen">
-                    <motion.div
-                        className="welcomeHero"
-                        initial={{ opacity: 0, y: 18 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, ease: "easeOut" }}
-                    >
-                        <div className="welcomeLogoBadge">
-                            <svg width="36" height="36" viewBox="0 0 42 42" fill="none">
-                                <path
-                                    d="M21 4L37 13v16L21 38 5 29V13L21 4z"
-                                    stroke="url(#welcomeLogoGrad)"
-                                    strokeWidth="2.5"
-                                    fill="none"
-                                />
-                                <path
-                                    d="M21 12L29 17v10l-8 5-8-5V17l8-5z"
-                                    fill="url(#welcomeLogoGrad)"
-                                    opacity="0.3"
-                                />
-                                <circle cx="21" cy="21" r="4" fill="url(#welcomeLogoGrad)" />
-                                <defs>
-                                    <linearGradient id="welcomeLogoGrad" x1="0" y1="0" x2="42" y2="42">
-                                        <stop offset="0%" stopColor="#8B5CF6" />
-                                        <stop offset="50%" stopColor="#3B82F6" />
-                                        <stop offset="100%" stopColor="#06B6D4" />
-                                    </linearGradient>
-                                </defs>
-                            </svg>
-                        </div>
-                        <h1 className="welcomeHeading">How can Nexara help today?</h1>
-                        <p className="welcomeSubheading">
-                            Supercharged intelligence designed for fast reasoning, deep coding, and creative problem solving.
-                        </p>
-                    </motion.div>
-
-                    <motion.div
-                        className="suggestionsGrid"
-                        initial={{ opacity: 0, y: 22 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.15, ease: "easeOut" }}
-                    >
-                        {SUGGESTIONS.map((s, i) => (
-                            <motion.div
-                                key={s.title}
-                                className="suggestionCard"
-                                onClick={() => handleSuggestionClick(s.prompt)}
-                                whileHover={{ y: -3, scale: 1.01 }}
-                                whileTap={{ scale: 0.98 }}
-                                transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                            >
-                                <div className="suggestionHeader">
-                                    <div className="suggestionIcon">{s.icon}</div>
-                                    <ArrowUpRight size={16} className="suggestionArrow" />
-                                </div>
-                                <div className="suggestionTitle">{s.title}</div>
-                                <div className="suggestionDesc">{s.desc}</div>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </div>
+                <motion.div
+                    className="emptyChat"
+                    initial={{ opacity: 0, scale: 0.98 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.25 }}
+                >
+                    <h1 className="startChatTitle">Start a New Chat!</h1>
+                </motion.div>
             ) : (
                 <div className="messageStream">
                     {prevChats?.map((chat, idx) => {
