@@ -54,10 +54,10 @@ function GlowRings() {
 
 /* ─── dashboard preview cards ─── */
 const previewFeatures = [
-    { icon: <Sparkles size={18} />, label: "Ask anything", desc: "Natural language AI" },
-    { icon: <BarChart3 size={18} />, label: "Analytics", desc: "Real-time insights" },
-    { icon: <Bot size={18} />, label: "AI Assistant", desc: "Always available" },
-    { icon: <Zap size={18} />, label: "Fast Responses", desc: "Sub-second latency" },
+    { icon: <Sparkles size={16} />, label: "Ask anything", desc: "Natural language AI" },
+    { icon: <BarChart3 size={16} />, label: "Analytics", desc: "Real-time insights" },
+    { icon: <Bot size={16} />, label: "AI Assistant", desc: "Always available" },
+    { icon: <Zap size={16} />, label: "Fast Responses", desc: "Sub-second latency" },
 ];
 
 /* ─── main component ─── */
@@ -145,7 +145,7 @@ function Auth({ onAuth }) {
                 <motion.div className="auth-logo-section" variants={itemVariants}>
                     <div className="auth-logo-glow" />
                     <div className="auth-logo-icon">
-                        <svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+                        <svg width="34" height="34" viewBox="0 0 42 42" fill="none">
                             <defs>
                                 <linearGradient id="logoGrad" x1="0" y1="0" x2="42" y2="42">
                                     <stop offset="0%" stopColor="#8B5CF6" />

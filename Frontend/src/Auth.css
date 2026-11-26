@@ -2,17 +2,42 @@
    Nexara Auth  –  Premium Silicon Valley AI SaaS Interface
    ═══════════════════════════════════════════════════════════════ */
 
-/* ── page reset ── */
+/* ── page reset & scroll container ── */
 .auth-page {
     position: relative;
     display: flex;
-    align-items: center;
+    align-items: safe center;
     justify-content: center;
     min-height: 100vh;
+    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
     width: 100%;
     background: #050816;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(139, 92, 246, 0.3) transparent;
+}
+
+.auth-page::-webkit-scrollbar {
+    width: 6px;
+}
+
+.auth-page::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.auth-page::-webkit-scrollbar-thumb {
+    background: rgba(139, 92, 246, 0.25);
+    border-radius: 9999px;
+}
+
+.auth-page::-webkit-scrollbar-thumb:hover {
+    background: rgba(139, 92, 246, 0.5);
 }
 
 /* keep old .authLoading for the spinner in App.jsx */
@@ -29,7 +54,7 @@
 
 /* aurora gradient 1 */
 .auth-aurora {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background:
         radial-gradient(ellipse 80% 60% at 20% 40%, rgba(139, 92, 246, 0.15) 0%, transparent 70%),
@@ -41,7 +66,7 @@
 
 /* aurora gradient 2 (counter-phase) */
 .auth-aurora-secondary {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background:
         radial-gradient(ellipse 50% 70% at 70% 60%, rgba(139, 92, 246, 0.08) 0%, transparent 60%),
@@ -58,7 +83,7 @@
 
 /* subtle grid overlay */
 .auth-grid-pattern {
-    position: absolute;
+    position: fixed;
     inset: 0;
     background-image:
         linear-gradient(rgba(139, 92, 246, 0.03) 1px, transparent 1px),
@@ -70,7 +95,7 @@
 /* ═══════════════════  FLOATING PARTICLES  ═══════════════════ */
 
 .auth-particles {
-    position: absolute;
+    position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: 1;
@@ -95,7 +120,7 @@
 /* ═══════════════════  GLOW RINGS  ═══════════════════ */
 
 .auth-glow-rings {
-    position: absolute;
+    position: fixed;
     inset: 0;
     display: flex;
     align-items: center;
@@ -145,10 +170,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 28px;
+    gap: 18px;
     width: 100%;
     max-width: 440px;
-    padding: 32px 20px;
+    padding: 12px 10px;
+    margin: auto;
 }
 
 /* ═══════════════════  LOGO SECTION  ═══════════════════ */
@@ -157,18 +183,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     position: relative;
 }
 
 .auth-logo-glow {
     position: absolute;
-    top: -30px;
-    width: 120px;
-    height: 120px;
+    top: -20px;
+    width: 100px;
+    height: 100px;
     background: radial-gradient(circle, rgba(139, 92, 246, 0.25), transparent 70%);
     border-radius: 50%;
-    filter: blur(30px);
+    filter: blur(25px);
     pointer-events: none;
     animation: logoGlowPulse 4s ease-in-out infinite;
 }
@@ -179,12 +205,12 @@
 }
 
 .auth-logo-icon {
-    width: 72px;
-    height: 72px;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 22px;
+    border-radius: 18px;
     background: rgba(139, 92, 246, 0.08);
     border: 1px solid rgba(139, 92, 246, 0.15);
     backdrop-filter: blur(20px);
@@ -194,7 +220,7 @@
 
 .auth-brand {
     margin: 0;
-    font-size: 36px;
+    font-size: 30px;
     font-weight: 800;
     letter-spacing: -0.03em;
     background: linear-gradient(135deg, #ffffff 0%, #8B5CF6 40%, #3B82F6 70%, #06B6D4 100%);
@@ -205,7 +231,7 @@
 
 .auth-tagline {
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 400;
     color: rgba(255, 255, 255, 0.45);
     letter-spacing: 0.02em;
@@ -215,7 +241,7 @@
 
 .auth-card {
     width: 100%;
-    border-radius: 24px;
+    border-radius: 22px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(40px) saturate(1.5);
@@ -240,25 +266,25 @@
 }
 
 .auth-card-inner {
-    padding: 36px 32px 32px;
+    padding: 26px 26px 22px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 15px;
 }
 
 /* ── headings ── */
 
 .auth-heading {
     margin: 0;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     color: #fff;
     letter-spacing: -0.02em;
 }
 
 .auth-sub {
-    margin: 4px 0 8px;
-    font-size: 14px;
+    margin: 3px 0 4px;
+    font-size: 13px;
     color: rgba(255, 255, 255, 0.4);
     font-weight: 400;
 }
@@ -269,9 +295,9 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 0 16px;
-    height: 52px;
-    border-radius: 16px;
+    padding: 0 14px;
+    height: 48px;
+    border-radius: 14px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.06);
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
@@ -303,7 +329,7 @@
     background: none;
     outline: none;
     color: #fff;
-    font-size: 15px;
+    font-size: 14px;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
     letter-spacing: 0.01em;
@@ -336,8 +362,8 @@
     background: rgba(239, 68, 68, 0.1);
     border: 1px solid rgba(239, 68, 68, 0.2);
     color: #fca5a5;
-    padding: 12px 16px;
-    border-radius: 14px;
+    padding: 10px 14px;
+    border-radius: 12px;
     font-size: 13px;
     font-weight: 500;
     overflow: hidden;
@@ -351,20 +377,20 @@
     justify-content: center;
     gap: 10px;
     width: 100%;
-    height: 52px;
+    height: 48px;
     border: none;
-    border-radius: 16px;
+    border-radius: 14px;
     background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #06B6D4 100%);
     color: #fff;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.01em;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     transition: box-shadow 0.4s ease;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .auth-cta::before {
@@ -439,8 +465,8 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    margin-top: 4px;
+    gap: 10px;
+    margin-top: 2px;
 }
 
 .auth-preview-label {
@@ -448,7 +474,7 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.25);
     letter-spacing: 0.04em;
@@ -458,15 +484,15 @@
 .auth-preview-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    gap: 8px;
 }
 
 .auth-preview-card {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 14px 16px;
-    border-radius: 16px;
+    padding: 10px 14px;
+    border-radius: 14px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.04);
     backdrop-filter: blur(10px);
@@ -484,23 +510,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
     color: #8B5CF6;
     flex-shrink: 0;
 }
 
 .auth-preview-card-title {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.8);
     line-height: 1.2;
 }
 
 .auth-preview-card-desc {
-    font-size: 11px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.3);
     margin-top: 1px;
 }
@@ -508,18 +534,22 @@
 /* ═══════════════════  RESPONSIVE  ═══════════════════ */
 
 @media (max-width: 480px) {
+    .auth-page {
+        padding: 16px 12px;
+    }
+
     .auth-content {
         max-width: 100%;
-        padding: 24px 16px;
-        gap: 24px;
+        padding: 8px 4px;
+        gap: 16px;
     }
 
     .auth-card-inner {
-        padding: 28px 20px 24px;
+        padding: 22px 18px 20px;
     }
 
     .auth-brand {
-        font-size: 30px;
+        font-size: 26px;
     }
 
     .auth-heading {
@@ -533,6 +563,30 @@
     .auth-glow-ring-1 { width: 300px; height: 300px; }
     .auth-glow-ring-2 { width: 450px; height: 450px; }
     .auth-glow-ring-3 { width: 600px; height: 600px; }
+}
+
+@media (max-height: 720px) {
+    .auth-page {
+        padding: 16px 12px;
+    }
+
+    .auth-content {
+        gap: 14px;
+    }
+
+    .auth-card-inner {
+        padding: 20px 22px 18px;
+        gap: 12px;
+    }
+
+    .auth-logo-icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .auth-brand {
+        font-size: 26px;
+    }
 }
 
 /* ── keep the old class for sidebar dropdown ── */

@@ -15,7 +15,8 @@ import {
     ArrowUp,
     Square,
     Sparkles,
-    Bot
+    Bot,
+    AlertTriangle
 } from "lucide-react";
 
 function ChatWindow() {
@@ -110,7 +111,7 @@ function ChatWindow() {
                         if (last?.role === "assistant" && !last.content) {
                             copy[copy.length - 1] = {
                                 ...last,
-                                content: "⚠️ Something went wrong. Please try again."
+                                content: "Something went wrong. Please try again."
                             };
                         }
                         return copy;

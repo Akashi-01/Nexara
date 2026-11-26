@@ -23,6 +23,11 @@ body {
   width: 100vw;
 }
 
+#root {
+  height: 100%;
+  width: 100%;
+}
+
 .app {
   background-color: var(--bg-primary);
   display: flex;

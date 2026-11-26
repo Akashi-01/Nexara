@@ -4,7 +4,7 @@ import { MyContext } from "./MyContext.jsx";
 import { v1 as uuidv1 } from "uuid";
 import { apiFetch } from "./api.js";
 import { motion } from "framer-motion";
-import { Plus, MessageSquare, Trash2, Sun, Moon, Sparkles } from "lucide-react";
+import { Plus, MessageSquare, Trash2, Sun, Moon, Sparkles, Heart } from "lucide-react";
 
 function Sidebar() {
     const {
@@ -201,7 +201,7 @@ function Sidebar() {
             <div className="sign">
                 <div className="creatorBadge">
                     <span className="creatorText">Created with</span>
-                    <span className="heartIcon">♥</span>
+                    <Heart size={12} className="heartIcon" />
                     <span className="creatorName">By Akashi</span>
                 </div>
             </div>

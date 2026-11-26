@@ -7,7 +7,7 @@ import "highlight.js/styles/github-dark.css";
 import CopyButton from "./components/CopyButton.jsx";
 import CodeBlock from "./components/CodeBlock.jsx";
 import { motion } from "framer-motion";
-import { Edit3, Check, X, Bot } from "lucide-react";
+import { Edit3, Check, X, Bot, AlertTriangle } from "lucide-react";
 
 function Chat() {
     const { newChat, prevChats, sendMessageRef, loading } = useContext(MyContext);
@@ -121,14 +121,21 @@ function Chat() {
                                             </div>
                                             <span className="assistantName">Nexara</span>
                                         </div>
-                                        <div className="assistantMessageBody">
-                                            <ReactMarkdown
-                                                rehypePlugins={[rehypeHighlight]}
-                                                components={markdownComponents}
-                                            >
-                                                {text}
-                                            </ReactMarkdown>
-                                        </div>
+                                        {text === "Something went wrong. Please try again." ? (
+                                            <div className="assistantErrorBody">
+                                                <AlertTriangle size={16} className="assistantErrorIcon" />
+                                                <span>{text}</span>
+                                            </div>
+                                        ) : (
+                                            <div className="assistantMessageBody">
+                                                <ReactMarkdown
+                                                    rehypePlugins={[rehypeHighlight]}
+                                                    components={markdownComponents}
+                                                >
+                                                    {text}
+                                                </ReactMarkdown>
+                                            </div>
+                                        )}
                                         <div className="messageActions">
                                             <CopyButton text={text} showLabel={false} />
                                         </div>
