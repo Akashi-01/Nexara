@@ -99,6 +99,8 @@ router.post("/chat", async (req, res) => {
         Connection: "keep-alive",
         "X-Accel-Buffering": "no",
     });
+    res.flushHeaders(); // <-- add this line
+
     const send = (obj) => res.write(`data: ${JSON.stringify(obj)}\n\n`);
 
     // If the browser disconnects (Stop button / tab closed), cancel the Groq call too

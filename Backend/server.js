@@ -17,14 +17,14 @@ const PORT = process.env.PORT || 8080;
 // Needed on Render/Railway so secure cookies work behind their proxy
 app.set("trust proxy", 1);
 
+app.get("/", (req, res) => res.send("Nexara API is running"));
+
 app.use(express.json());
 app.use(cookieParser());
-app.use(
-    cors({
-        origin: process.env.CLIENT_URL,
-        credentials: true,
-    })
-);
+app.use(cors({
+    origin: process.env.CLIENT_URL?.split(",").map((s) => s.trim()),
+    credentials: true,
+}));
 
 // Auth routes first, then chat routes
 app.use("/api/auth", authRoutes);
