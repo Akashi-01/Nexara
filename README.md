@@ -273,7 +273,8 @@ Contributions, issues, and feature requests are welcome.
 
 ## License
 
-Distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
+See [`LICENSE`](LICENSE) for details.
+This project is intended for educational and portfolio purposes.
 
 ---
 
